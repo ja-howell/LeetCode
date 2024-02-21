@@ -13,6 +13,38 @@
  */
 public class Solution {
     public ListNode MergeTwoLists(ListNode list1, ListNode list2) {
-        return list1;
+        ListNode newList;
+        ListNode r;
+        if (list1 != null && list2 != null) {
+            if (list1.val > list2.val) {
+                newList = list2;
+                list2 = list2.next;
+            } else {
+                newList = list1;
+                list1 = list1.next;
+            }
+        } else if (list1 == null) {
+            return list2;
+        } else {
+            return list1;
+        }
+        r = newList;
+        while (list1 != null && list2 != null) {
+            if (list1.val > list2.val) {
+                r.next = list2;
+                list2 = list2.next;
+            } else {
+                r.next = list1;
+                list1 = list1.next;
+            }
+            r = r.next;
+        }
+        if (list1 == null) {
+            r.next = list2;
+        } else if (list2 == null) {
+            r.next = list1;
+        }
+
+        return newList;
     }
 }
