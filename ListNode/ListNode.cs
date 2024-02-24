@@ -1,19 +1,27 @@
-public class ListNode {
+public class ListNode
+{
     public int val;
     public ListNode? next;
-    public ListNode(int val=0, ListNode? next=null) {
+    public ListNode(int val = 0, ListNode? next = null)
+    {
         this.val = val;
         this.next = next;
     }
 
-    public static void appendListNode(ref ListNode? l, ListNode? x) {
-        if (l == null){
+    public static void appendListNode(ref ListNode? l, ListNode? x)
+    {
+        if (l == null)
+        {
             l = x;
             return;
         }
         appendListNode(ref l.next, x);
     }
+
+    public static void append(ref ListNode? l, int val)
+    {
+        ListNode.appendListNode(ref l, new ListNode(val));
+    }
 }
 
 
- 
