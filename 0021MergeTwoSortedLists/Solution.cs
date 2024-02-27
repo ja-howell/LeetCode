@@ -11,37 +11,54 @@
  *     }
  * }
  */
-public class Solution {
-    public ListNode MergeTwoLists(ListNode list1, ListNode list2) {
+public class Solution
+{
+    public ListNode MergeTwoLists(ListNode list1, ListNode list2)
+    {
         ListNode newList;
         ListNode r;
-        if (list1 != null && list2 != null) {
-            if (list1.val > list2.val) {
+        if (list1 != null && list2 != null)
+        {
+            if (list1.val > list2.val)
+            {
                 newList = list2;
                 list2 = list2.next;
-            } else {
+            }
+            else
+            {
                 newList = list1;
                 list1 = list1.next;
             }
-        } else if (list1 == null) {
+        }
+        else if (list1 == null)
+        {
             return list2;
-        } else {
+        }
+        else
+        {
             return list1;
         }
         r = newList;
-        while (list1 != null && list2 != null) {
-            if (list1.val > list2.val) {
+        while (list1 != null && list2 != null)
+        {
+            if (list1.val > list2.val)
+            {
                 r.next = list2;
                 list2 = list2.next;
-            } else {
+            }
+            else
+            {
                 r.next = list1;
                 list1 = list1.next;
             }
             r = r.next;
         }
-        if (list1 == null) {
+        if (list1 == null)
+        {
             r.next = list2;
-        } else if (list2 == null) {
+        }
+        else if (list2 == null)
+        {
             r.next = list1;
         }
 

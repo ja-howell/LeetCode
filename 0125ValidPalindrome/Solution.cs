@@ -1,16 +1,21 @@
 using System;
 using System.Text;
-public class Solution{
-    public bool IsPalindrome(string s) {
+public class Solution
+{
+    public bool IsPalindrome(string s)
+    {
         s = CleanString(s);
         return ValidPalindrome(s);
     }
 
-    public string CleanString(string s) {
+    public string CleanString(string s)
+    {
         StringBuilder stringBuilder = new StringBuilder();
         string cleaned;
-        foreach (char letter in s) {
-            if (char.IsLetterOrDigit(letter)) {
+        foreach (char letter in s)
+        {
+            if (char.IsLetterOrDigit(letter))
+            {
                 stringBuilder.Append(letter);
             }
         }
@@ -28,9 +33,12 @@ public class Solution{
     //     s = s.Substring(1, (s.Length - 2));
     //     return ValidPalindrome(s);
     // }
-    public bool ValidPalindrome(string s) {
-        for (int i = 0; i < s.Length / 2; i++) {
-            if (s[i] != s[s.Length - i - 1]) {
+    public bool ValidPalindrome(string s)
+    {
+        for (int i = 0; i < s.Length / 2; i++)
+        {
+            if (s[i] != s[s.Length - i - 1])
+            {
                 return false;
             }
         }

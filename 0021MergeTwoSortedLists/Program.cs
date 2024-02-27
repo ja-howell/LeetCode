@@ -11,23 +11,25 @@
  */
 using System;
 
-class Program {
-    static void Main(string[] args) {
+class Program
+{
+    static void Main(string[] args)
+    {
         // Example usage:
         ListNode list1 = new ListNode(
             1,
-            new ListNode (
+            new ListNode(
                 2,
-                new ListNode (
+                new ListNode(
                     4
                 )
             )
         );
         ListNode list2 = new ListNode(
             1,
-            new ListNode (
+            new ListNode(
                 3,
-                new ListNode (
+                new ListNode(
                     4
                 )
             )
@@ -36,7 +38,8 @@ class Program {
         Solution solution = new Solution();
         ListNode result = solution.MergeTwoLists(list1, list2);
         ListNode? runner = list1;
-        while (runner != null) {
+        while (runner != null)
+        {
             Console.WriteLine(runner.val);
             runner = runner.next;
         }
