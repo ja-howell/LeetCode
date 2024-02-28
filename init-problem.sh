@@ -5,9 +5,9 @@ if [[ $# -ne "1" ]]; then
     exit 1
 fi
 
-newdir="$1"
+problem_name="$1"
 
-dotnet new console --output "$newdir"
-cp templates/* "$newdir"
-mv "$newdir/TEMPLATENAME.csproj" "$newdir/$newdir.csproj"
-sed -i -e "s/TEMPLATENAME/$newdir/" "$newdir/$newdir.csproj"
+dotnet new console --output "$problem_name"
+cp templates/* "$problem_name"
+mv "$problem_name/TEMPLATENAME.csproj" "$problem_name/$problem_name.csproj"
+sed -i -e "s/TEMPLATENAME/$problem_name/" "$problem_name/$problem_name.csproj"
