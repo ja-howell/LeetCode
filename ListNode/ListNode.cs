@@ -32,6 +32,40 @@ public class ListNode
         }
         Console.WriteLine("]");
     }
+
+    public void RemoveNode(ref ListNode? head, ListNode x)
+    {
+        if (head == x)
+        {
+            head = null;
+        }
+        //TODO: If head == null 
+        //TODO: If x is not in list
+        ListNode runner = head;
+        while (runner.next != x)
+        {
+            runner = runner.next;
+        }
+        runner.next = x.next;
+    }
+
+    public void InsertNode(ref ListNode? head, ListNode x, ListNode next)
+    {
+        if (next == head)
+        {
+            head = x;
+            head.next = next;
+            return;
+        }
+        ListNode runner = head;
+        //TODO: What if head is empty?
+        while (runner.next != next)
+        {
+            runner = runner.next;
+        }
+        x.next = next;
+        runner.next = x;
+    }
 }
 
 
