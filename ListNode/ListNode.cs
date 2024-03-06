@@ -33,7 +33,7 @@ public class ListNode
         Console.WriteLine("]");
     }
 
-    public void RemoveNode(ref ListNode? head, ListNode x)
+    public static void RemoveNode(ref ListNode? head, ListNode x)
     {
         if (head == x)
         {
@@ -49,7 +49,7 @@ public class ListNode
         runner.next = x.next;
     }
 
-    public void InsertNode(ref ListNode? head, ListNode x, ListNode next)
+    public static void InsertNode(ref ListNode? head, ListNode x, ListNode next)
     {
         if (next == head)
         {
