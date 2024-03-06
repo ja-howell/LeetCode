@@ -22,6 +22,16 @@ public class ListNode
     {
         ListNode.appendListNode(ref l, new ListNode(val));
     }
+
+    public static void print(ref ListNode? l) 
+    {
+        Console.Write("[ ");
+        for (ListNode? r = l; r != null; r = r.next)
+        {
+            Console.Write(r.val + " ");
+        }
+        Console.WriteLine("]");
+    }
 }
 
 
