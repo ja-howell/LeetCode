@@ -4,7 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        ListNode test1 = new ListNode(4);
+        ListNode? test1 = new ListNode(4);
         ListNode.append(ref test1, 2);
         ListNode.append(ref test1, 1);
         ListNode.append(ref test1, 3);

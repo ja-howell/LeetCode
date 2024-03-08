@@ -12,10 +12,10 @@
 #nullable enable
 public class Solution
 {
-    public ListNode InsertionSortList(ListNode head)
+    public ListNode InsertionSortList(ListNode? head)
     {
         // check if null or 1 node
-        if (head == null || head.next == null)
+        if (head?.next == null)
         {
             return head;
         }
