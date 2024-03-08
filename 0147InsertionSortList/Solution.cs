@@ -29,26 +29,23 @@ public class Solution
         while (i != null)
         {
             ListNode j = head;
-            if (j.val > i.val)
+            if (i.val < j.val) // i < j
             {
                 RemoveNode(ref prev, i);
                 InsertNode(ref head, i, head);
             }
-            else
+            else if (i.val < prev.val) // j < i < prev
             {
-                while (j != i && j.next.val < i.val)
+                while (j.next.val < i.val)
                 {
                     j = j.next;
                 }
-                if (j.next != i)
-                {
-                    RemoveNode(ref prev, i);
-                    InsertNode(ref j, i, j.next);
-                }
-                else
-                {
-                    prev = prev.next;
-                }
+                RemoveNode(ref prev, i);
+                InsertNode(ref j, i, j.next);
+            }
+            else // prev < i
+            {
+                prev = prev.next;
             }
             i = prev.next;
         }
