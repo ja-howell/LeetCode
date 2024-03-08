@@ -12,15 +12,16 @@ public class Solution
         Dictionary<int, int> frequencyTracker = new Dictionary<int, int>();
 
         //finds the max frequency
-        for (int i = 0; i < nums.Length; i++)
+        foreach (var num in nums)
         {
-            if (frequencyTracker.ContainsKey(nums[i]))
+            if (frequencyTracker.ContainsKey(num))
             {
-                maxFrequency = IncrementSeenVal(maxFrequency, nums[i], ref frequencyTracker);
+                IncrementSeenVal(num, ref frequencyTracker);
+                maxFrequency = Math.Max(maxFrequency, frequencyTracker[num]);
             }
             else
             {
-                AddToDictionary(nums[i], ref frequencyTracker);
+                AddToDictionary(num, ref frequencyTracker);
             }
         }
         //calculates the number of elements with the maxFrequency
@@ -35,17 +36,10 @@ public class Solution
         frequencyTracker.Add(num, 1);
     }
 
-    private int IncrementSeenVal(int maxFrequency, int num, ref Dictionary<int, int> frequencyTracker)
+    private void IncrementSeenVal(int num, ref Dictionary<int, int> frequencyTracker)
     {
         //if the num is already in the dictionary, increment the seen val
         frequencyTracker[num]++;
-        //if the seen val is greater than maxFrequency replace it
-        if (frequencyTracker[num] > maxFrequency)
-        {
-            maxFrequency = frequencyTracker[num];
-        }
-
-        return maxFrequency;
     }
 
     private int CalculateMaxFrequencyElements(int maxFrequency, Dictionary<int, int> frequencyTracker)
