@@ -18,12 +18,14 @@ public class Solution
         }
 
         int[] result = new int[intersection.Count];
-        int index = 0;
-        foreach (int i in intersection)
-        {
-            result[index] = i;
-            index++;
-        }
+        // int index = 0;
+        // foreach (int i in intersection)
+        // {
+        //     result[index] = i;
+        //     index++;
+        // }
+        intersection.CopyTo(result);
+
 
         return result;
     }
