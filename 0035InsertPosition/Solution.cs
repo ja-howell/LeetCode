@@ -11,30 +11,22 @@ public class Solution
     private int BinarySearch(int[] nums, int target, int begin, int end)
     {
         int mid = (begin + end) / 2;
-        if (mid >= nums.Length)
+        if (mid >= nums.Length || target == nums[mid])
         {
             return mid;
         }
-        if (target == nums[mid])
+        if (begin == end)
         {
-            return mid;
-        }
-        if (begin == end && nums[mid] < target)
-        {
-            return mid + 1;
-        }
-        if (begin == end && nums[mid] > target)
-        {
-            return mid;
+            if (nums[mid] < target)
+            {
+                return mid + 1;
+            }
+            return mid;    
         }
         if (target < nums[mid])
         {
             return BinarySearch(nums, target, begin, mid);
         }
-        else if (target > nums[mid])
-        {
-            return BinarySearch(nums, target, mid + 1, end);
-        }
-        return mid;
+        return BinarySearch(nums, target, mid + 1, end);
     }
 }
