@@ -6,42 +6,16 @@ public class Solution
         {
             return 0;
         }
-        int next = findNextStartIndex(0, s);
-        int end = 0;
-        int start = 0;
-        while (next != -1)
-        {
-            start = next;
-            end = findNextEndIndex(next, s);
-            next = findNextStartIndex(end, s);            
-        }
 
-        return end - start;
-    }
-
-    private int findNextStartIndex(int i, string s)
-    {
-        while (i < s.Length)
-        {
-            if (s[i] != ' ')
-            {
-                return i;
-            }
-            i++;
-        }
-        return -1;
-    }
-
-    private int findNextEndIndex(int i, string s)
-    {
-        while (i < s.Length)
-        {
-            if (s[i] == ' ')
-            {
-                return i;
-            }          
-            i++;
-        }
-        return s.Length;
+	int end = s.Length - 1;
+	while (end >= 0 && s[end] == ' ') {
+		end--;
+	}
+	int start = end-1;
+	while (start >= 0 && s[start] != ' ')
+	{
+		start++;
+	}
+	return end - start;
     }
 }
