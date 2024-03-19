@@ -41,10 +41,10 @@ public class ListNode
         }
         //TODO: If head == null 
         //TODO: If x is not in list
-        ListNode runner = head;
-        while (runner.next != x)
+        ListNode? runner = head!;
+        while (runner?.next != x)
         {
-            runner = runner.next;
+            runner = runner?.next;
         }
         runner.next = x.next;
     }
@@ -57,11 +57,11 @@ public class ListNode
             head.next = next;
             return;
         }
-        ListNode runner = head;
+        ListNode? runner = head!;
         //TODO: What if head is empty?
-        while (runner.next != next)
+        while (runner?.next != next)
         {
-            runner = runner.next;
+            runner = runner?.next;
         }
         x.next = next;
         runner.next = x;
