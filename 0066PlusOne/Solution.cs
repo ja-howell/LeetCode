@@ -7,21 +7,15 @@ public class Solution
             if (digits[i] == 9)
             {
                 digits[i] = 0;
-
-                if (i == 0)
-                {
-                    int[] result = new int[digits.Length + 1];
-                    result[0] = 1;
-                    return result;
-                }
             }
             else
             {
                 digits[i]++;
                 return digits;
             }
-
         }
-        return digits;
+        int[] result = new int[digits.Length + 1];
+        result[0] = 1;
+        return result;
     }
 }
