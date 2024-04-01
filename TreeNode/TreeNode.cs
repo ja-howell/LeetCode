@@ -71,4 +71,25 @@ public class TreeNode
         }
         return (Contains(root.left, key) || Contains(root.right, key));
     }
+
+    public static bool ContainsBST(TreeNode root, int key)
+    {
+        if (root is null)
+        {
+            return false;
+        }
+        if (root.val == key)
+        {
+            return true;
+        }
+
+        if (root.val > key)
+        {
+            return ContainsBST(root.left, key);
+        }
+        else
+        {
+            return ContainsBST(root.right, key);
+        }
+    }
 }
