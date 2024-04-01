@@ -58,4 +58,17 @@ public class TreeNode
         Print(root.left, depth + 1);
         Print(root.right, depth + 1);
     }
+
+    public static bool Contains(TreeNode root, int key)
+    {
+        if (root is null)
+        {
+            return false;
+        }
+        if (root.val == key)
+        {
+            return true;
+        }
+        return (Contains(root.left, key) || Contains(root.right, key));
+    }
 }
