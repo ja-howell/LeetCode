@@ -14,7 +14,7 @@ public class Solution
 	int start = end-1;
 	while (start >= 0 && s[start] != ' ')
 	{
-		start++;
+		start--;
 	}
 	return end - start;
     }
