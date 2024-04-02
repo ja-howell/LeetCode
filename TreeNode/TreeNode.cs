@@ -92,4 +92,21 @@ public class TreeNode
             return ContainsBST(root.right, key);
         }
     }
+
+    public static void Insert(ref TreeNode root, int key)
+    {
+        if (root is null)
+        {
+            root = new TreeNode(key);
+            return;
+        }
+        if (root.val > key)
+        {
+            Insert(ref root.left, key);
+        }
+        else
+        {
+            Insert(ref root.right, key);
+        }
+    }
 }

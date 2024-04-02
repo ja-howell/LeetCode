@@ -2,8 +2,9 @@ public class Driver
 {
     public static void Main(string[] args)
     {
-        CheckContains();
-        CheckContainsBST();
+        // CheckContains();
+        // CheckContainsBST();
+        CheckInsert();
     }
 
     private static void CheckContains()
@@ -32,5 +33,17 @@ public class Driver
                 Console.WriteLine(num + ": " + TreeNode.ContainsBST(t, num.Value));
             }
         }
+    }
+    private static void CheckInsert()
+    {
+        Console.WriteLine();
+        Console.WriteLine("Checks Insert()");
+        int?[] nums = { 5, 4, 8, 1, null, 7, 9 };
+        TreeNode t = TreeNode.NewTreeNode(nums);
+        TreeNode.Print(t);
+        TreeNode.Insert(ref t, 0);
+        Console.WriteLine("Insert 0:");
+        TreeNode.Print(t);
+
     }
 }
