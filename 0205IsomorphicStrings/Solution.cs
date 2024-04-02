@@ -13,22 +13,16 @@ public class Solution
         {
             if (!dictS.ContainsKey(s[i]))
             {
-                if (!dictT.ContainsKey(t[i]))
-                {
-                    dictS.Add(s[i], t[i]);
-                    dictT.Add(t[i], s[i]);
-                }
-                else
+                if (dictT.ContainsKey(t[i]))
                 {
                     return false;
                 }
+                dictS.Add(s[i], t[i]);
+                dictT.Add(t[i], s[i]);
             }
-            else
+            else if (dictS[s[i]] != t[i])
             {
-                if (dictS[s[i]] != t[i] || dictT[t[i]] != s[i])
-                {
-                    return false;
-                }
+                return false;
             }
         }
         return true;
