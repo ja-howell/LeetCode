@@ -4,29 +4,18 @@ public class Solution
 {
     public string MakeGood(string s)
     {
-        StringBuilder sb = new StringBuilder(s);
-        int length = sb.Length;
-        int i = 0;
-        while (i < sb.Length)
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < s.Length; i++)
         {
-            sb = CheckAndRemoveAdjacents(sb, i);
-            i++;
-            if (length > sb.Length)
+            if (sb.Length > 0 && IsSameCharOppositeCase(s[i], sb[sb.Length - 1])) {
+                sb.Remove(sb.Length - 1, 1);
+            }
+            else
             {
-                i = 0;
-                length = sb.Length;
+                sb.Append(s[i]);
             }
         }
         return sb.ToString();
-    }
-
-    private static StringBuilder CheckAndRemoveAdjacents(StringBuilder sb, int i)
-    {
-        if (i < sb.Length - 1 && IsSameCharOppositeCase(sb[i], sb[i + 1]))
-        {
-            sb.Remove(i, 2);
-        }
-        return sb;
     }
 
     private static bool IsSameCharOppositeCase(char x, char y)
@@ -43,5 +32,4 @@ public class Solution
     {
         return (char.IsUpper(x) && char.IsLower(y)) || (char.IsLower(x) && char.IsUpper(y));
     }
-
 }
