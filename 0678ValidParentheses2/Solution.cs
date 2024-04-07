@@ -1,54 +1,51 @@
 public class Solution
 {
+    const char wild = '*';
+    const char left = '(';
+    const char right = ')';
     public bool CheckValidString(string s)
     {
         Stack<char> chars = new Stack<char>();
-        char wild = '*';
-        char left = '(';
-        char right = ')';
         bool result = true;
 
         for (int i = 0; i < s.Length; i++)
         {
-            if (s[i] == wild)
+            if (s[i] == wild || s[i] == left)
             {
-                chars.Push(wild);
+                chars.Push(s[i]);
             }
-            if (s[i] == left)
+            else
             {
-                chars.Push(left);
+                result = IsRightValid(chars);
             }
-            if (s[i] == right)
+            if (!result)
             {
-                result = IsRightValid(chars, left, right, wild);
-            }
-            if (result == false)
-            {
-                return result;
+                return false;
             }
         }
         //If we still have chars check to make sure that there are no lefts to the right of wilds and enough wilds for lefts
         if (!IsEmpty(chars))
         {
-            result = ValidateRemainingStack(chars, left, wild);
+            result = ValidateRemainingStack(chars);
         }
         return result;
     }
 
-    private static bool IsRightValid(Stack<char> chars, char left, char right, char wild)
+    private static bool IsRightValid(Stack<char> chars)
     {
         if (IsEmpty(chars))
         {
             return false;
         }
-        else if (!IsEmpty(chars) && chars.Peek() == left)
+        
+        if (chars.Peek() == left)
         {
             chars.Pop();
             return true;
         }
-        else if (!IsEmpty(chars) && chars.Peek() == wild)
+        else if (chars.Peek() == wild)
         {
-            CheckForLeft(chars, left, wild);
+            CheckForLeft(chars);
             return true;
         }
         else
@@ -59,51 +56,37 @@ public class Solution
 
     private static bool IsEmpty(Stack<char> stack)
     {
-        if (stack.Count == 0)
-        {
-            return true;
-        }
-        return false;
+        return stack.Count == 0;
     }
 
-    private static void CheckForLeft(Stack<char> stack, char left, char wild)
+    private static void CheckForLeft(Stack<char> stack)
     {
         int counter = 0;
         bool foundLeft = false;
         char temp;
-        while (!IsEmpty(stack) && foundLeft == false)
+        while (!IsEmpty(stack) && !foundLeft)
         {
             temp = stack.Pop();
             if (temp == wild)
             {
                 counter++;
             }
-            else if (temp == left)
+            else
             {
                 foundLeft = true;
             }
         }
-        if (foundLeft)
+        if (!foundLeft)
         {
-            while (counter > 0)
-            {
-                stack.Push(wild);
-                counter--;
-            }
-        }
-        else
-        {
-            //Use a wild
             counter--;
-            //put any others back
-            while (counter > 0)
-            {
-                stack.Push(wild);
-                counter--;
-            }
+        }
+        while (counter > 0)
+        {
+            stack.Push(wild);
+            counter--;
         }
     }
-    private static bool ValidateRemainingStack(Stack<char> stack, char left, char wild)
+    private static bool ValidateRemainingStack(Stack<char> stack)
     {
         char temp;
         int wildCount = 0;
