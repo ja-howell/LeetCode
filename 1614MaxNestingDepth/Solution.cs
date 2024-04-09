@@ -4,22 +4,19 @@ public class Solution
     {
         const char left = '(';
         const char right = ')';
-        Stack<char> numLefts = new Stack<char>(); 
+        int numLefts = 0;
         int maxDepth = 0;
-        int tempDepth = 0;
 
         for (int i = 0; i < s.Length; i++)
         {
             if(s[i] == left)
             {
-                numLefts.Push(s[i]);
+                numLefts++;
             }
             else if (s[i] == right)
             {
-                tempDepth = numLefts.Count;
-                maxDepth = Math.Max(tempDepth, maxDepth);
-                tempDepth = 0;
-                numLefts.Pop();
+                maxDepth = Math.Max(numLefts, maxDepth);
+                numLefts--;
             }
         }
         return maxDepth;
