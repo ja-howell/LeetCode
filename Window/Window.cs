@@ -30,19 +30,6 @@ public class Window
 
     public void Next()
     {
-        Console.Write("Window: ");
-        for (int i = left; i <= right; i++)
-        {
-            Console.Write(nums[i] + " ");
-        }
-        Console.WriteLine();
-        Console.Write("Dict: ");
-        foreach (var item in seen)
-        {
-            Console.Write(item.Key + ": " + item.Value + ", ");
-        }
-        Console.WriteLine();
-        // { 9: 2, 7: 1}
         this.right += 1;
         if (this.seen.ContainsKey(this.nums[right]))
         {
