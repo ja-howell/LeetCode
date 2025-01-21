@@ -10,38 +10,38 @@ const (
 )
 
 func main() {
-	s := "())(()(()(())()())(())((())(()())((())))))(((((((())(()))))("
-	locked := "100011110110011011010111100111011101111110000101001101001111"
+	s := "))()))"
+	locked := "010100"
 	fmt.Println(canBeValid(s, locked))
 }
 
 func canBeValid(s string, locked string) bool {
-	return isValid(s, locked, 0)
-}
-
-func isValid(parens string, locked string, depth int) bool {
-	//It  doesn't go far enough back to track all possible flips
-	// fmt.Printf("s: %v, locked: %v, depth: %v\n", parens, locked, depth)
-	if parens == "" {
-		return depth == 0
-	}
-	if depth == -1 {
+	if len(s)%2 == 1 {
 		return false
 	}
-
-	valid := false
-	if parens[0] == left {
-		valid = isValid(parens[1:], locked[1:], depth+1)
-		// fmt.Printf("valid: %v\ns: %v, locked: %v, depth: %v\n", valid, parens, locked, depth)
-	} else {
-		valid = isValid(parens[1:], locked[1:], depth-1)
-	}
-	if !valid && locked[0] == '0' {
-		if parens[0] == left {
-			valid = isValid(parens[1:], locked[1:], depth-1)
-		} else {
-			valid = isValid(parens[1:], locked[1:], depth+1)
+	//indices of unlocked parens and open parens
+	unlocked := []int{}
+	leftParens := []int{}
+	for i := 0; i < len(s); i++ {
+		if locked[i] == '0' {
+			unlocked = append(unlocked, i)
+		} else if s[i] == left {
+			leftParens = append(leftParens, i)
+		} else if s[i] == right {
+			if len(leftParens) > 0 {
+				leftParens = leftParens[:len(leftParens)-1]
+			} else if len(unlocked) > 0 {
+				unlocked = unlocked[:len(unlocked)-1]
+			} else {
+				return false
+			}
 		}
 	}
-	return valid
+
+	for len(leftParens) > 0 && len(unlocked) > 0 && leftParens[len(leftParens)-1] < unlocked[len(unlocked)-1] {
+		leftParens = leftParens[:len(leftParens)-1]
+		unlocked = unlocked[:len(unlocked)-1]
+	}
+
+	return !(len(leftParens) > 0)
 }

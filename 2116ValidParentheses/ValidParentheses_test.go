@@ -1,12 +1,13 @@
 package main
 
 import (
+	"log"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
-func TestIsValid(t *testing.T) {
+func TestCanBeValid(t *testing.T) {
 	tests := []struct {
 		input    string
 		locked   string
@@ -18,9 +19,10 @@ func TestIsValid(t *testing.T) {
 		{"())()))()(()(((())(()()))))((((()())(())", "1011101100010001001011000000110010100101", true},
 		{"())(()(()(())()())(())((())(()())((())))))(((((((())(()))))(", "100011110110011011010111100111011101111110000101001101001111", false},
 	}
-	for _, test := range tests {
+	for i, test := range tests {
+		log.Println(i)
 		assert := assert.New(t)
-		got := isValid(test.input, test.locked, 0)
+		got := canBeValid(test.input, test.locked)
 		assert.Equal(test.expected, got)
 	}
 
