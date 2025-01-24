@@ -2,14 +2,9 @@ package main
 
 import "fmt"
 
-type Position struct {
+type Cell struct {
 	row int
 	col int
-}
-
-type Cell struct {
-	Position
-	height int
 }
 
 func main() {
@@ -27,7 +22,7 @@ func highestPeak(isWater [][]int) [][]int {
 	queue := []Cell{}
 	numRows := len(isWater)
 	numCols := len(isWater[0])
-	visited := map[Position]struct{}{}
+	// visited := map[]struct{}{}
 
 	for row := 0; row < numRows; row++ {
 		for col := 0; col < len(isWater[0]); col++ {
@@ -36,8 +31,8 @@ func highestPeak(isWater [][]int) [][]int {
 				height[row][col] = -1
 			} else {
 				height[row][col] = 0
-				queue = append(queue, Cell{Position{row, col}, 0})
-				visited[Position{row, col}] = struct{}{}
+				queue = append(queue, Cell{row, col})
+				// visited[{row, col}] = struct{}{}
 			}
 		}
 	}
@@ -47,32 +42,11 @@ func highestPeak(isWater [][]int) [][]int {
 		cell := queue[0]
 		queue = queue[1:]
 
-		if height[cell.row][cell.col] == -1 {
-			height[cell.row][cell.col] = cell.height
-		}
 		//Add NSWE cells if valid and if the height is -1
-		if isValidPosition(cell.row-1, cell.col, numRows, numCols) && height[cell.row-1][cell.col] == -1 {
-			if _, ok := visited[Position{cell.row - 1, cell.col}]; !ok {
-				queue = append(queue, Cell{Position{cell.row - 1, cell.col}, cell.height + 1})
-				visited[Position{cell.row - 1, cell.col}] = struct{}{}
-			}
-		}
-		if isValidPosition(cell.row+1, cell.col, numRows, numCols) && height[cell.row+1][cell.col] == -1 {
-			if _, ok := visited[Position{cell.row + 1, cell.col}]; !ok {
-				queue = append(queue, Cell{Position{cell.row + 1, cell.col}, cell.height + 1})
-				visited[Position{cell.row + 1, cell.col}] = struct{}{}
-			}
-		}
-		if isValidPosition(cell.row, cell.col-1, numRows, numCols) && height[cell.row][cell.col-1] == -1 {
-			if _, ok := visited[Position{cell.row, cell.col - 1}]; !ok {
-				queue = append(queue, Cell{Position{cell.row, cell.col - 1}, cell.height + 1})
-				visited[Position{cell.row, cell.col - 1}] = struct{}{}
-			}
-		}
-		if isValidPosition(cell.row, cell.col+1, numRows, numCols) && height[cell.row][cell.col+1] == -1 {
-			if _, ok := visited[Position{cell.row, cell.col + 1}]; !ok {
-				queue = append(queue, Cell{Position{cell.row, cell.col + 1}, cell.height + 1})
-				visited[Position{cell.row, cell.col + 1}] = struct{}{}
+		for _, v := range getNeighbors(cell, numRows, numCols) {
+			if height[v.row][v.col] == -1 {
+				height[v.row][v.col] = height[cell.row][cell.col] + 1
+				queue = append(queue, v)
 			}
 		}
 		// fmt.Printf("Queue after pass: %v\nHeight: %v\n", queue, height)
@@ -81,6 +55,24 @@ func highestPeak(isWater [][]int) [][]int {
 	return height
 }
 
-func isValidPosition(row int, col int, numRows int, numCols int) bool {
+func isValid(row int, col int, numRows int, numCols int) bool {
 	return row >= 0 && row < numRows && col >= 0 && col < numCols
+}
+
+func getNeighbors(cell Cell, numRows int, numCols int) []Cell {
+	candidates := []Cell{
+		{cell.row - 1, cell.col},
+		{cell.row + 1, cell.col},
+		{cell.row, cell.col - 1},
+		{cell.row, cell.col + 1},
+	}
+
+	neighbors := []Cell{}
+	for _, candidate := range candidates {
+		if isValid(candidate.row, candidate.col, numRows, numCols) {
+			neighbors = append(neighbors, candidate)
+		}
+	}
+
+	return neighbors
 }
