@@ -5,14 +5,11 @@ class Program
     static void Main(string[] args)
     {
         int[][] graph = {
-            new int[] {1,2},
-            new int[] {2,3},
-            new int[] {5},
-            new int[] {0},
-            new int[] {5},
             new int[] {},
-            new int[] {}
-
+            new int[] {0,2,3,4},
+            new int[] {3},
+            new int[] {4},
+            new int[] {},
         };
         Solution solution = new Solution();
 

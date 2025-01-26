@@ -2,60 +2,56 @@ public class Solution
 {
     public IList<int> EventualSafeNodes(int[][] graph)
     {
-        HashSet<int>[] graphSet = ToGraphSet(graph);
-        List<int> safe = new List<int>();
-        bool changed = true;
+        HashSet<int> safe = new HashSet<int>();
+        HashSet<int> notSafe = new HashSet<int>();
 
-        while (changed)
-        {
-            changed = false;
-            for (int i = 0; i < graphSet.Length; i++)
-            {
-                if (!safe.Contains(i) && graphSet[i].Count == 0)
-                {
-                    safe.Add(i);
-                    PruneNode(ref graphSet, i);
-                    changed = true;
-                }
-            }
-
-        }
-        safe.Sort();
-        return safe;
-    }
-
-    private static HashSet<int>[] ToGraphSet(int[][] graph)
-    {
-        HashSet<int>[] graphSet = new HashSet<int>[graph.Length];
         for (int i = 0; i < graph.Length; i++)
         {
-            graphSet[i] = new HashSet<int>();
-            for (int j = 0; j < graph[i].Length; j++)
+            HashSet<int> visited = new HashSet<int>();
+            if (!notSafe.Contains(i) || !safe.Contains(i))
             {
-                graphSet[i].Add(graph[i][j]);
+                if (IsSafeNode(i, graph, visited, ref notSafe, ref safe))
+                {
+                    safe.Add(i);
+                }
+                else
+                {
+                    notSafe.Add(i);
+                }
             }
         }
-        return graphSet;
-    }
 
-    private static void PruneNode(ref HashSet<int>[] graphSet, int node)
-    {
-        for (int i = 0; i < graphSet.Length; i++)
+        List<int> safeList = new List<int>();
+        foreach (int n in safe)
         {
-            graphSet[i].Remove(node);
+            safeList.Add(n);
         }
+        safeList.Sort();
+        return safeList;
     }
 
-    // private static void PrintGraphSet(HashSet<int>[] graphSet)
-    // {
-    //     for (int i = 0; i < graphSet.Length; i++)
-    //     {
-    //         Console.Write($"{i}: ");
-    //         foreach (int n in graphSet[i])
-    //         {
-    //             Console.Write($"{n} ");
-    //         }
-    //         Console.WriteLine();
-    //     }
-    // }
+    private static bool IsSafeNode(int node, int[][] graph, HashSet<int> visited, ref HashSet<int> notSafe, ref HashSet<int> safe)
+    {
+        if (graph[node].Length == 0 || safe.Contains(node))
+        {
+            safe.Add(node);
+            return true;
+        }
+        if (notSafe.Contains(node) || visited.Contains(node))
+        {
+            notSafe.Add(node);
+            return false;
+        }
+        visited.Add(node);
+        foreach (int v in graph[node])
+        {
+            if (!IsSafeNode(v, graph, visited, ref notSafe, ref safe))
+            {
+                return false;
+            }
+        }
+        visited.Remove(node);
+        safe.Add(node);
+        return true;
+    }
 }
