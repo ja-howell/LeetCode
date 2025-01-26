@@ -10,14 +10,7 @@ public class Solution
             HashSet<int> visited = new HashSet<int>();
             if (!notSafe.Contains(i) || !safe.Contains(i))
             {
-                if (IsSafeNode(i, graph, visited, ref notSafe, ref safe))
-                {
-                    safe.Add(i);
-                }
-                else
-                {
-                    notSafe.Add(i);
-                }
+                IsSafeNode(i, graph, visited, ref notSafe, ref safe);
             }
         }
 
