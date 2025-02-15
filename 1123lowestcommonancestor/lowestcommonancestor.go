@@ -29,11 +29,12 @@ func deepestLeaves(root *TreeNode, depth int) (ancestor *TreeNode, maxDepth int)
 	ancestorLeft, maxDepthLeft := deepestLeaves(root.Left, depth)
 	ancestorRight, maxDepthRight := deepestLeaves(root.Right, depth)
 
-	if maxDepthLeft > maxDepthRight {
+	switch {
+	case maxDepthLeft > maxDepthRight:
 		return ancestorLeft, maxDepthLeft
-	} else if maxDepthLeft < maxDepthRight {
+	case maxDepthLeft < maxDepthRight:
 		return ancestorRight, maxDepthRight
-	} else {
+	default:
 		return root, maxDepthLeft
 	}
 
