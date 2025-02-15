@@ -1,9 +1,8 @@
 package main
 
 import (
+	"container/heap"
 	"fmt"
-	"math"
-	"slices"
 )
 
 func main() {
@@ -17,45 +16,40 @@ func main() {
 func minOperations(nums []int, k int) int {
 	minOps := 0
 
-	slices.Sort(nums)
+	numsHeap := Heap(nums)
+	heap.Init(&numsHeap)
 
-	for nums[0] < k {
-		nums = performOperation(nums, k)
+	for numsHeap[0] < k {
+		x := heap.Pop(&numsHeap).(int)
+		y := heap.Pop(&numsHeap).(int)
+		heap.Push(&numsHeap, x*2+y)
 		minOps++
 	}
 
 	return minOps
 }
 
-func performOperation(nums []int, k int) []int {
-	//remove two smallest nums (x, y)
-	//Insert (min(x, y) * 2 + max(x, y))
+type Heap []int
 
-	x := float64(nums[0])
-	y := float64(nums[1])
-
-	nums = nums[2:]
-	num := int((math.Min(x, y)*2 + math.Max(x, y)))
-
-	// nums = append(nums, num)
-
-	// if num < k {
-	// 	slices.Sort(nums)
-	// }
-	// slices.Sort(nums)
-
-	return insertNum(nums, num, k)
-
+func (h Heap) Len() int {
+	return len(h)
 }
 
-func insertNum(nums []int, num int, k int) []int {
-	for i, v := range nums {
-		if v > k {
-			nums = slices.Insert(nums, i+1, num)
-			return nums
-		}
-	}
-	nums = append(nums, num)
+func (h Heap) Less(i, j int) bool {
+	return h[i] < h[j]
+}
 
-	return nums
+func (h Heap) Swap(i, j int) {
+	h[i], h[j] = h[j], h[i]
+}
+
+func (h *Heap) Push(x any) {
+	i := x.(int)
+	*h = append(*h, i)
+}
+
+func (h *Heap) Pop() any {
+	i := (*h)[len(*h)-1]
+	*h = (*h)[:len(*h)-1]
+	return i
 }
