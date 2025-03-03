@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"slices"
 )
 
 func main() {
@@ -16,19 +15,22 @@ func main() {
 
 func pivotArray(nums []int, pivot int) []int {
 
-	left := 0
+	leftArray := []int{}
+	pivotArray := []int{}
+	rightArray := []int{}
 
 	pivotedArray := make([]int, 0, len(nums))
 
 	for _, val := range nums {
 		if val > pivot {
-			pivotedArray = append(pivotedArray, val)
+			rightArray = append(rightArray, val)
 		} else if val < pivot {
-			pivotedArray = slices.Insert(pivotedArray, left, val)
-			left++
+			leftArray = append(leftArray, val)
 		} else {
-			pivotedArray = slices.Insert(pivotedArray, left, val)
+			pivotArray = append(pivotArray, val)
 		}
 	}
+	pivotedArray = append(leftArray, pivotArray...)
+	pivotedArray = append(pivotedArray, rightArray...)
 	return pivotedArray
 }
