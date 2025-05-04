@@ -3,8 +3,8 @@ package main
 import "fmt"
 
 func main() {
-	tops := []int{1, 2, 1, 1, 1, 2, 2, 2}
-	bottoms := []int{2, 1, 2, 2, 2, 2, 2, 2}
+	tops := []int{1, 1, 2}
+	bottoms := []int{2, 3, 4}
 
 	fmt.Println(minDominoRotations(tops, bottoms))
 
@@ -13,37 +13,56 @@ func main() {
 func minDominoRotations(tops []int, bottoms []int) int {
 	numsCountTop := make(map[int]int)
 	numsCountBottom := make(map[int]int)
-	numsDoubles := make(map[int]int)
+	doubleVal := -1
 
-	for i := 0; i < len(tops); i++ {
+	validSet := map[int]struct{}{
+		tops[0]:    {},
+		bottoms[0]: {},
+	}
+	// 1 1 2
+	// 2 3 4
+
+	for i := range len(tops) {
 		top := tops[i]
 		bottom := bottoms[i]
+		_, containsTop := validSet[top]
+		_, containsBottom := validSet[bottom]
+		if !containsTop && !containsBottom {
+			return -1
+		}
+
+		if !containsBottom {
+			validSet = map[int]struct{}{top: {}}
+		} else if !containsTop {
+			validSet = map[int]struct{}{bottom: {}}
+		}
 		if top == bottom {
-			// Take into account if the number is the same on the top and bottom
-			numsDoubles[top]++
-			if isPossible(numsCountTop[top], numsCountBottom[bottom], numsDoubles[top], len(tops)) {
-				return min(numsCountTop[top], numsCountBottom[bottom])
+			if doubleVal == -1 {
+				doubleVal = top
+			} else if doubleVal != top {
+				return -1
 			}
+			// Double dominos will never flip, so don't count them
 			continue
 		}
-		numsCountTop[top]++
-		numsCountBottom[bottom]++
+		if containsTop {
+			numsCountTop[top]++
+		}
+		if containsBottom {
+			numsCountBottom[bottom]++
+		}
 
-		doubleCount := numsDoubles[top]
-		bottomCount := numsCountBottom[top]
-		if isPossible(numsCountTop[top], bottomCount, doubleCount, len(tops)) {
-			return min(numsCountBottom[top], numsCountTop[top])
-		}
-		doubleCount = numsDoubles[bottom]
-		topCount := numsCountTop[bottom]
-		if isPossible(topCount, numsCountBottom[bottom], doubleCount, len(tops)) {
-			return min(numsCountBottom[bottom], numsCountTop[bottom])
-		}
+	}
+
+	top := tops[len(tops)-1]
+	if _, containsTop := validSet[top]; containsTop {
+		return min(numsCountBottom[top], numsCountTop[top])
+	}
+
+	bottom := bottoms[len(bottoms)-1]
+	if _, containsBottom := validSet[bottom]; containsBottom {
+		return min(numsCountBottom[bottom], numsCountTop[bottom])
 	}
 
 	return -1
-}
-
-func isPossible(topCount int, bottomCount int, doubleCount int, numDominos int) bool {
-	return topCount+bottomCount+doubleCount >= numDominos
 }
