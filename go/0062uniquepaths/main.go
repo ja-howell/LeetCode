@@ -31,9 +31,5 @@ func buildGrid(rows int, cols int) [][]int {
 		}
 	}
 
-	for r := range grid {
-		fmt.Println(grid[r])
-	}
-
 	return grid
 }
